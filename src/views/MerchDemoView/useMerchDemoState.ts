@@ -30,6 +30,15 @@ export const useMerchDemoState = () => {
     [availableRoles],
   );
 
+  const slideOptions = useMemo(
+    () =>
+      selectedSlides.map((slide, index) => ({
+        label: `${index + 1}. ${slide.title}`,
+        value: index,
+      })),
+    [selectedSlides],
+  );
+
   const selectMode = (nextMode: Mode) => {
     setMode(nextMode);
 
@@ -43,6 +52,11 @@ export const useMerchDemoState = () => {
   const selectRole = (roleKey: RoleKey) => {
     setSelectedRoleKey(roleKey);
     setSlideIndex(0);
+  };
+
+  const selectSlide = (index: number) => {
+    if (index < 0 || index >= selectedSlides.length) return;
+    setSlideIndex(index);
   };
 
   const goToSlide = (direction: number) => {
@@ -61,9 +75,10 @@ export const useMerchDemoState = () => {
     activeSlide,
     slideIndex,
     roleOptions,
+    slideOptions,
     selectMode,
     selectRole,
+    selectSlide,
     goToSlide,
-    setSlideIndex,
   };
 };

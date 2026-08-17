@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 
 import type { Accent } from "./types";
 
@@ -194,6 +194,88 @@ export const RoleControls = styled.div`
   @media (max-width: 900px) {
     min-width: 0;
     align-items: stretch;
+  }
+`;
+
+export const SlidePickerMenuStyle = createGlobalStyle`
+  html {
+    scrollbar-gutter: stable;
+  }
+
+  .slide-picker-menu {
+    max-width: min(720px, calc(100vw - 32px));
+  }
+
+  .slide-picker-menu .ant-dropdown-menu {
+    max-height: min(520px, calc(100vh - 140px));
+    overflow-y: auto;
+  }
+
+  .slide-picker-menu .ant-dropdown-menu-title-content {
+    white-space: normal;
+    line-height: 1.35;
+  }
+
+  .slide-picker-menu__item {
+    display: block;
+    max-width: 640px;
+    white-space: normal;
+  }
+`;
+
+export const SlidePickerWrap = styled.div`
+  width: min(100%, 500px);
+  flex: 0 0 auto;
+`;
+
+export const SlidePickerButton = styled.button`
+  width: 100%;
+  min-height: 62px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  border: 1px solid ${({ theme }) => theme.colors.colorBorder};
+  border-radius: ${({ theme }) => theme.radius.md}px;
+  background: ${({ theme }) => theme.colors.colorBgContainer};
+  color: ${({ theme }) => theme.colors.colorText};
+  cursor: pointer;
+  text-align: left;
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
+
+  &:hover,
+  &:focus-visible,
+  &[aria-expanded="true"] {
+    border-color: ${({ theme }) => theme.colors.colorPrimary};
+    box-shadow: 0 0 0 2px ${({ theme }) => `${theme.colors.colorPrimary}18`};
+    outline: none;
+  }
+
+  > span:first-child {
+    min-width: 0;
+    display: grid;
+    gap: 2px;
+  }
+
+  small {
+    color: ${({ theme }) => theme.colors.colorTextSecondary};
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  strong {
+    color: ${({ theme }) => theme.colors.colorText};
+    font-size: 13px;
+    line-height: 1.3;
+    white-space: normal;
+  }
+
+  .anticon {
+    flex: 0 0 auto;
   }
 `;
 

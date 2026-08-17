@@ -4,13 +4,14 @@ import {
   AppstoreOutlined,
   AuditOutlined,
   ControlOutlined,
+  DownOutlined,
   FileSearchOutlined,
   LeftOutlined,
   MobileOutlined,
   PictureOutlined,
   RightOutlined,
 } from "@ant-design/icons";
-import { Button, Flex, Progress, Segmented, Typography } from "antd";
+import { Button, Dropdown, Flex, Progress, Segmented, Typography } from "antd";
 
 import { modeOptions } from "./config/constants";
 import {
@@ -40,6 +41,9 @@ import {
   SlideGrid,
   SlideHeader,
   SlideIcon,
+  SlidePickerButton,
+  SlidePickerMenuStyle,
+  SlidePickerWrap,
   TopBar,
 } from "./styles";
 import { useMerchDemoState } from "./useMerchDemoState";
@@ -57,14 +61,16 @@ export const MerchDemoView = () => {
     activeSlide,
     slideIndex,
     roleOptions,
+    slideOptions,
     selectMode,
     selectRole,
+    selectSlide,
     goToSlide,
-    setSlideIndex,
   } = useMerchDemoState();
 
   return (
     <PageShell>
+      <SlidePickerMenuStyle />
       <TopBar>
         <BrandMark>
           <AppstoreOutlined />
@@ -147,6 +153,32 @@ export const MerchDemoView = () => {
                 options={roleOptions}
                 onChange={(value) => selectRole(value as RoleKey)}
               />
+              <SlidePickerWrap>
+                <Dropdown
+                  trigger={["click"]}
+                  placement="bottomRight"
+                  getPopupContainer={(trigger) => trigger.parentElement ?? document.body}
+                  overlayClassName="slide-picker-menu"
+                  menu={{
+                    selectedKeys: [String(slideIndex)],
+                    onClick: ({ key }) => selectSlide(Number(key)),
+                    items: slideOptions.map((option) => ({
+                      key: String(option.value),
+                      label: <span className="slide-picker-menu__item">{option.label}</span>,
+                    })),
+                  }}
+                >
+                  <SlidePickerButton type="button" aria-label="Перехід до слайду">
+                    <span>
+                      <small>
+                        Слайд {slideIndex + 1} з {selectedSlides.length}
+                      </small>
+                      <strong>{activeSlide.title}</strong>
+                    </span>
+                    <DownOutlined />
+                  </SlidePickerButton>
+                </Dropdown>
+              </SlidePickerWrap>
               <Flex gap={8}>
                 <Button icon={<LeftOutlined />} onClick={() => goToSlide(-1)} />
                 <Button type="primary" icon={<RightOutlined />} onClick={() => goToSlide(1)}>
@@ -208,7 +240,7 @@ export const MerchDemoView = () => {
                   type="button"
                   $active={index === slideIndex}
                   $accent={selectedRole.accent}
-                  onClick={() => setSlideIndex(index)}
+                  onClick={() => selectSlide(index)}
                   aria-label={`Слайд ${index + 1} з ${selectedSlides.length}`}
                 />
               ))}
