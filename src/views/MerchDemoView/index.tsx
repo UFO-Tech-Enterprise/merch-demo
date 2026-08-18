@@ -8,11 +8,11 @@ import {
   FileSearchOutlined,
   LeftOutlined,
   MobileOutlined,
-  PictureOutlined,
   RightOutlined,
 } from "@ant-design/icons";
 import { Button, Dropdown, Flex, Progress, Segmented, Typography } from "antd";
 
+import { SlideScreenshotStage } from "./components/SlideScreenshotStage";
 import { modeOptions } from "./config/constants";
 import {
   BrandMark,
@@ -35,7 +35,6 @@ import {
   RoleDeck,
   RoleDeckTop,
   RoleTag,
-  ScreenshotStage,
   SlideBody,
   SlideDots,
   SlideGrid,
@@ -189,11 +188,12 @@ export const MerchDemoView = () => {
           </RoleDeckTop>
 
           <SlideGrid>
-            <ScreenshotStage $accent={selectedRole.accent}>
-              <PictureOutlined />
-              <strong>{activeSlide.screenLabel}</strong>
-              <span>Макет екрану застосунку</span>
-            </ScreenshotStage>
+            <SlideScreenshotStage
+              slideKey={activeSlide.key}
+              screenLabel={activeSlide.screenLabel}
+              accent={selectedRole.accent}
+              inlineScreenshots={activeSlide.screenshots}
+            />
 
             <SlideBody>
               <SlideHeader>

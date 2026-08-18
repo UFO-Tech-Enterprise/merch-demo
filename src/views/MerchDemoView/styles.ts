@@ -4,8 +4,11 @@ import type { Accent } from "./types";
 
 export const PageShell = styled.main`
   width: 100%;
+  max-width: 100%;
   min-height: 100svh;
-  padding: 24px;
+  padding: clamp(12px, 2vw, 24px);
+  overflow-x: clip;
+  box-sizing: border-box;
   background:
     linear-gradient(120deg, rgba(31, 111, 235, 0.12), transparent 36%),
     linear-gradient(
@@ -159,13 +162,17 @@ export const OverviewSteps = styled.ol`
 
 export const RoleDeck = styled.section<{ $accent: Accent }>`
   width: min(100%, ${({ theme }) => theme.layout.pageMax}px);
+  max-width: 100%;
+  min-width: 0;
   margin: 28px auto 0;
-  padding: 20px;
+  padding: clamp(12px, 2vw, 20px);
   border: 1px solid ${({ theme }) => theme.colors.colorBorder};
   border-top: 4px solid ${({ $accent, theme }) => theme.brandColors[$accent]};
   border-radius: ${({ theme }) => theme.radius.md}px;
   background: ${({ theme }) => theme.colors.colorBgContainer};
   box-shadow: 0 22px 64px rgba(21, 32, 51, 0.12);
+  overflow: hidden;
+  box-sizing: border-box;
 `;
 
 export const RoleDeckTop = styled.header`
@@ -173,6 +180,7 @@ export const RoleDeckTop = styled.header`
   justify-content: space-between;
   gap: 18px;
   margin-bottom: 18px;
+  min-width: 0;
 
   h2 {
     margin: 6px 0 8px;
@@ -185,7 +193,8 @@ export const RoleDeckTop = styled.header`
 `;
 
 export const RoleControls = styled.div`
-  min-width: 360px;
+  min-width: 0;
+  max-width: 100%;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -281,52 +290,23 @@ export const SlidePickerButton = styled.button`
 
 export const SlideGrid = styled.div`
   display: grid;
-  grid-template-columns: minmax(300px, 0.76fr) minmax(460px, 1.24fr);
+  grid-template-columns: minmax(0, 0.88fr) minmax(0, 1.12fr);
   gap: 18px;
+  min-width: 0;
+  align-items: stretch;
 
   @media (max-width: 980px) {
-    grid-template-columns: 1fr;
-  }
-`;
-
-export const ScreenshotStage = styled.div<{ $accent: Accent }>`
-  min-height: 590px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 16px;
-  padding: 26px;
-  border: 1px dashed ${({ $accent, theme }) => theme.brandColors[$accent]};
-  border-radius: ${({ theme }) => theme.radius.md}px;
-  background:
-    linear-gradient(
-      135deg,
-      ${({ $accent, theme }) => `${theme.brandColors[$accent]}12`},
-      transparent
-    ),
-    ${({ theme }) => theme.colors.colorBgLayout};
-
-  .anticon {
-    color: ${({ $accent, theme }) => theme.brandColors[$accent]};
-    font-size: 44px;
-  }
-
-  strong {
-    font-size: 20px;
-  }
-
-  span {
-    color: ${({ theme }) => theme.colors.colorTextSecondary};
-    line-height: 1.55;
+    grid-template-columns: minmax(0, 1fr);
   }
 `;
 
 export const SlideBody = styled.div`
-  min-height: 590px;
+  min-width: 0;
+  min-height: 0;
   display: flex;
   flex-direction: column;
   gap: 18px;
-  padding: 24px;
+  padding: clamp(16px, 2vw, 24px);
   border-radius: ${({ theme }) => theme.radius.md}px;
   background: ${({ theme }) => theme.colors.colorBgLayout};
 `;
@@ -373,15 +353,18 @@ export const RoleTag = styled.span<{ $accent: Accent }>`
 
 export const InfoColumns = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
+  align-items: stretch;
+  flex: 1 1 auto;
 
   @media (max-width: 760px) {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 `;
 
 export const InfoBox = styled.div`
+  height: 100%;
   padding: 16px;
   border: 1px solid ${({ theme }) => theme.colors.colorBorder};
   border-radius: ${({ theme }) => theme.radius.md}px;

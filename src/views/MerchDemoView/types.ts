@@ -13,6 +13,14 @@ export interface RoleConfig {
   summaries: Record<Mode, string>;
 }
 
+export type SlideScreenshotOrientation = "portrait" | "landscape";
+
+export interface SlideScreenshot {
+  src: string;
+  alt?: string;
+  orientation: SlideScreenshotOrientation;
+}
+
 export interface FeatureSlide {
   key: string;
   eyebrow: string;
@@ -26,4 +34,6 @@ export interface FeatureSlide {
     label: string;
     value: string;
   }>;
+  /** До 4 скріншотів. Альтернатива — config/screenshots.ts за ключем слайду */
+  screenshots?: SlideScreenshot[];
 }
